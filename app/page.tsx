@@ -1,5 +1,9 @@
 
+"use client";
+
+import { useState } from "react";
 export default function Page() {
+const [menuOpen, setMenuOpen] = useState(false);
   const collections = [
   {
     title: "Oversized - Built Different",
@@ -40,49 +44,106 @@ export default function Page() {
   ];
 
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="min-h-screen w-full overflow-x-hidden bg-white text-black">
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img
-              src="/logo.jpg"
-              alt="Liorre Logo"
-              className="h-30 w-auto"
-            />
-            <span className="text-xl font-bold tracking-wide">LIORRE</span>
-          </div>
+      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
 
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#collections" className="text-gray-600 hover:text-black transition">Collections</a>
-            <a href="#about" className="text-gray-600 hover:text-black transition">About</a>
-            <a href="#contact" className="text-gray-600 hover:text-black transition">Contact</a>
-<a
-  href="/lookbook"
-  className="bg-zinc-800 text-white px-6 py-3 rounded-xl hover:bg-black transition duration-300 inline-block shadow-md"
->
-  View Lookbook
-</a>
-          </div>
-        </div>
-      </nav>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+
+    <div className="flex items-center gap-3">
+      <img
+        src="/logo.jpg"
+        alt="Liorre Logo"
+        className="h-12 sm:h-16 md:h-20 w-auto"
+      />
+      <span className="text-xl font-bold tracking-wide">
+        LIORRE
+      </span>
+    </div>
+
+    {/* Desktop Menu */}
+    <div className="hidden md:flex items-center gap-8">
+      <a href="#collections" className="hover:text-black">Collections</a>
+      <a href="#about" className="hover:text-black">About</a>
+      <a href="#contact" className="hover:text-black">Contact</a>
+
+      <a
+        href="/lookbook"
+        className="bg-black text-white px-6 py-3 rounded-xl"
+      >
+        Lookbook
+      </a>
+    </div>
+
+    {/* Mobile Menu Button */}
+    <button
+      className="md:hidden text-3xl"
+      onClick={() => setMenuOpen(!menuOpen)}
+    >
+      ☰
+    </button>
+
+  </div>
+
+  {/* Mobile Menu */}
+  {menuOpen && (
+    <div className="md:hidden bg-white border-t">
+
+      <a
+        href="#collections"
+        className="block px-6 py-4 border-b"
+        onClick={() => setMenuOpen(false)}
+      >
+        Collections
+      </a>
+
+      <a
+        href="#about"
+        className="block px-6 py-4 border-b"
+        onClick={() => setMenuOpen(false)}
+      >
+        About
+      </a>
+
+      <a
+        href="#contact"
+        className="block px-6 py-4 border-b"
+        onClick={() => setMenuOpen(false)}
+      >
+        Contact
+      </a>
+
+      <a
+        href="/lookbook"
+        className="block px-6 py-4"
+        onClick={() => setMenuOpen(false)}
+      >
+        Lookbook
+      </a>
+
+    </div>
+  )}
+
+</nav>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <p className="uppercase tracking-[0.3em] text-amber-600 text-sm mb-4">
               Oraeon Group
             </p>
 
-            <div className="flex items-center gap-4 mb-2">
-              <img
-                src="/logo.jpg"
-                alt="Liorre Logo"
-                className="h-16 w-auto"
-              />
-              <h1 className="text-5xl md:text-7xl font-bold">LIORRE</h1>
-            </div>
+            <div className="flex items-center gap-3 sm:gap-4 mb-2">
+  <img
+    src="/logo.jpg"
+    alt="Liorre Logo"
+    className="h-12 sm:h-16 w-auto"
+  />
+  <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold">
+    LIORRE
+  </h1>
+</div>
 
             <p className="mt-6 text-lg text-gray-600 max-w-xl">
               Premium oversized, round neck and polo t-shirts crafted for
@@ -93,23 +154,23 @@ export default function Page() {
           </div>
 
           <div>
-            <img
+      <img
   src="/hero_instead.png"
   alt="Liorre Premium Oversized T-Shirt"
-  className="rounded-3xl w-full h-[500px] object-cover shadow-xl"
+  className="rounded-3xl w-full h-auto max-h-[600px] object-contain shadow-xl"
 />
           </div>
         </div>
       </section>
 
       {/* About */}
-      <section id="about" className="bg-gray-50 py-24">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="about" className="bg-gray-50 py-12 sm:py-16 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <img
+<img
   src="/About_pot.png"
   alt="Minimal Luxury"
-  className="rounded-3xl w-full h-[500px] object-cover shadow-xl"
+  className="rounded-3xl w-full h-auto max-h-[600px] object-contain shadow-xl"
 />
 
             <div>
@@ -145,44 +206,61 @@ export default function Page() {
       </section>
 
       {/* Collections */}
-      <section id="collections" className="py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center">
-            <p className="uppercase tracking-[0.3em] text-amber-600 text-sm mb-4">
-              Collections
+      <section id="collections" className="py-12 sm:py-16 lg:py-24">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div className="text-center">
+      <p className="uppercase tracking-[0.3em] text-amber-600 text-sm mb-4">
+        Collections
+      </p>
+
+      <h2 className="text-3xl sm:text-4xl font-bold">
+        Designed To Stand Out
+      </h2>
+    </div>
+
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-10 sm:mt-12">
+
+      {collections.map((item) => (
+        <div
+          key={item.title}
+          className="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition"
+        >
+
+          <div className="w-full h-72 sm:h-80 lg:h-96 bg-gray-50 flex items-center justify-center">
+            <img
+              src={item.image}
+              alt={item.title}
+              className="w-full h-full object-contain"
+            />
+          </div>
+
+
+          <div className="p-5 sm:p-6">
+
+            <h3 className="text-xl sm:text-2xl font-semibold">
+              {item.title}
+            </h3>
+
+
+            <p className="text-gray-600 mt-3">
+              {item.description}
             </p>
 
-            <h2 className="text-4xl font-bold">Designed To Stand Out</h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mt-12">
-            {collections.map((item) => (
-              <div
-                key={item.title}
-                className="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition"
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-72 w-full object-cover"
-                />
-
-                <div className="p-6">
-                  <h3 className="text-2xl font-semibold">{item.title}</h3>
-
-                  <p className="text-gray-600 mt-3">
-                    Premium quality fabrics with modern styling.
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
-      </section>
+      ))}
+
+    </div>
+
+  </div>
+</section>
 
       {/* CTA / Contact */}
-      <section id="contact" className="py-24 px-6">
-        <div className="max-w-5xl mx-auto text-center bg-gray-100 rounded-3xl p-12">
+      <section id="contact" className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6">
+  <div className="max-w-5xl mx-auto text-center bg-gray-100 rounded-3xl p-6 sm:p-12">
           <h2 className="text-4xl md:text-5xl font-bold">
             Wear Confidence With Liorre
           </h2>
@@ -228,7 +306,7 @@ export default function Page() {
               oraeongroup@gmail.com
             </a>
             <a
-  href="https://https://www.instagram.com/liorre2026?utm_source=qr&igsh=amVyYzh5MDJhbW55/"
+  href="https://www.instagram.com/liorre2026?utm_source=qr&igsh=amVyYzh5MDJhbW55/"
   target="_blank"
   rel="noopener noreferrer"
   className="text-gray-600 hover:text-black transition"
