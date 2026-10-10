@@ -2,16 +2,6 @@ export default function Lookbook() {
   return (
     <main className="bg-[#f5f1ed] text-black min-h-screen">
 
-      {/* Back Button */}
-      <div className="p-6">
-        <a
-          href="/"
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-black transition"
-        >
-          ← Return to Home
-        </a>
-      </div>
-
       {/* Cover Page */}
       <section className="min-h-screen flex flex-col items-center justify-center text-center px-6">
 
@@ -208,8 +198,8 @@ export default function Lookbook() {
         <div className="max-w-4xl mx-auto text-center">
 
           <p className="text-4xl md:text-5xl italic font-light leading-relaxed">
-            "No matter where you come from,
-            your dreams are valid."
+            &ldquo;No matter where you come from,
+            your dreams are valid.&rdquo;
           </p>
 
         </div>

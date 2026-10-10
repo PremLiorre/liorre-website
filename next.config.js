@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  // A stray package-lock.json in the home folder confuses root detection.
+  turbopack: {
+    root: __dirname,
+  },
 };
 
 module.exports = nextConfig;
