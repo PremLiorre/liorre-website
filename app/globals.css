@@ -21,7 +21,7 @@ body {
 /* Leave room for the sticky navbar whenever the page scrolls to something
    (section links like /#reviews and Next.js scroll-to-page on navigation). */
 html {
-  scroll-padding-top: 80px;
+  scroll-padding-top: 100px;
 }
 
 /* Horizontally running image strip (components/Marquee.tsx). */

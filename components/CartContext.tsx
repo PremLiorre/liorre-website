@@ -30,8 +30,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]");
+      // Drop items that are no longer available (sold-out products or sizes).
+      const available = Array.isArray(saved)
+        ? saved.filter((i: CartItem) => {
+            const p = getProduct(i.slug);
+            return p && !p.outOfStock && !p.soldOutSizes?.includes(i.size);
+          })
+        : [];
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (Array.isArray(saved)) setItems(saved.filter((i) => getProduct(i.slug)));
+      setItems(available);
     } catch {}
     setLoaded(true);
   }, []);

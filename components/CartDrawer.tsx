@@ -7,9 +7,53 @@ import { useCart } from "./CartContext";
 import { getProduct } from "@/lib/products";
 import { SITE, formatPrice, whatsappLink } from "@/lib/site";
 
+type Address = {
+  name: string;
+  phone: string;
+  address: string;
+  landmark: string;
+  city: string;
+  state: string;
+  pincode: string;
+};
+
+const EMPTY_ADDRESS: Address = { name: "", phone: "", address: "", landmark: "", city: "", state: "", pincode: "" };
+const ADDRESS_KEY = "liorre-address";
+
+function validate(a: Address) {
+  const errors: Partial<Record<keyof Address, string>> = {};
+  if (!a.name.trim()) errors.name = "Enter your full name";
+  if (!/^(\+?91[\s-]?)?[6-9]\d{9}$/.test(a.phone.replace(/\s/g, ""))) errors.phone = "Enter a valid 10-digit mobile number";
+  if (a.address.trim().length < 8) errors.address = "Enter house no., street and area";
+  if (!a.city.trim()) errors.city = "Enter your city";
+  if (!a.state.trim()) errors.state = "Enter your state";
+  if (!/^\d{6}$/.test(a.pincode.trim())) errors.pincode = "Enter a 6-digit pincode";
+  return errors;
+}
+
 export default function CartDrawer() {
   const { items, total, isOpen, close, setQty, remove } = useCart();
   const [copied, setCopied] = useState(false);
+  const [address, setAddress] = useState<Address>(EMPTY_ADDRESS);
+  const [showErrors, setShowErrors] = useState(false);
+
+  // Remember the address on this device for the next order.
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(ADDRESS_KEY) ?? "null");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (saved) setAddress({ ...EMPTY_ADDRESS, ...saved });
+    } catch {}
+  }, []);
+
+  const update = (field: keyof Address) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const next = { ...address, [field]: e.target.value };
+    setAddress(next);
+    localStorage.setItem(ADDRESS_KEY, JSON.stringify(next));
+  };
+
+  const errors = validate(address);
+  const addressValid = Object.keys(errors).length === 0;
 
   useEffect(() => {
     if (!isOpen) return;
@@ -31,10 +75,27 @@ export default function CartDrawer() {
     }),
     "",
     `Total: ${formatPrice(total)}`,
+    "",
+    "Delivery address:",
+    address.name.trim(),
+    `Phone: ${address.phone.trim()}`,
+    address.address.trim(),
+    ...(address.landmark.trim() ? [`Landmark: ${address.landmark.trim()}`] : []),
+    `${address.city.trim()}, ${address.state.trim()} - ${address.pincode.trim()}`,
   ].join("\n");
+
+  // Order buttons only work once the address is complete.
+  const requireAddress = (e?: React.MouseEvent) => {
+    if (addressValid) return true;
+    e?.preventDefault();
+    setShowErrors(true);
+    document.getElementById("cart-address")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    return false;
+  };
 
   // Instagram can't prefill a DM, so copy the order first for the customer to paste.
   const orderOnInstagram = async () => {
+    if (!requireAddress()) return;
     try {
       await navigator.clipboard.writeText(orderMessage);
       setCopied(true);
@@ -76,8 +137,8 @@ export default function CartDrawer() {
             </Link>
           </div>
         ) : (
-          <>
-            <ul className="flex-1 overflow-y-auto divide-y divide-gray-100 px-6">
+          <div className="flex-1 overflow-y-auto">
+            <ul className="divide-y divide-gray-100 px-6">
               {items.map((i) => {
                 const p = getProduct(i.slug)!;
                 return (
@@ -131,13 +192,37 @@ export default function CartDrawer() {
                 <span>Total</span>
                 <span>{formatPrice(total)}</span>
               </div>
+
+              <fieldset id="cart-address" className="pt-2 space-y-3 scroll-mt-4">
+                <legend className="font-bold mb-1">Delivery Address</legend>
+                {(
+                  [
+                    { field: "name", label: "Full name", autoComplete: "name" },
+                    { field: "phone", label: "Mobile number", autoComplete: "tel", inputMode: "tel" },
+                    { field: "address", label: "House no., street, area", autoComplete: "street-address", multiline: true },
+                    { field: "landmark", label: "Landmark (optional)" },
+                  ] as const
+                ).map((f) => (
+                  <AddressInput key={f.field} {...f} value={address[f.field]} onChange={update(f.field)} error={showErrors ? errors[f.field] : undefined} />
+                ))}
+                <div className="grid grid-cols-2 gap-3">
+                  <AddressInput field="city" label="City" autoComplete="address-level2" value={address.city} onChange={update("city")} error={showErrors ? errors.city : undefined} />
+                  <AddressInput field="state" label="State" autoComplete="address-level1" value={address.state} onChange={update("state")} error={showErrors ? errors.state : undefined} />
+                </div>
+                <AddressInput field="pincode" label="Pincode" autoComplete="postal-code" inputMode="numeric" value={address.pincode} onChange={update("pincode")} error={showErrors ? errors.pincode : undefined} />
+              </fieldset>
+
               <p className="text-xs text-gray-500">
-                Orders are confirmed over chat. Our team will share payment and
-                delivery details.
+                Your order and address are sent to Liorre on chat. Our team will confirm
+                availability and share payment details.
               </p>
+              {showErrors && !addressValid && (
+                <p className="text-sm text-red-600">Please complete the delivery address above to place your order.</p>
+              )}
 
               {SITE.whatsappNumber && (
                 <a
+                  onClick={requireAddress}
                   href={whatsappLink(orderMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -154,13 +239,49 @@ export default function CartDrawer() {
               </button>
               {copied && (
                 <p className="text-xs text-green-700 text-center">
-                  Order copied — paste it in the Instagram chat.
+                  Order and address copied — paste them in the Instagram chat.
                 </p>
               )}
             </div>
-          </>
+          </div>
         )}
       </aside>
+    </div>
+  );
+}
+
+function AddressInput({
+  field,
+  label,
+  value,
+  onChange,
+  error,
+  autoComplete,
+  inputMode,
+  multiline,
+}: {
+  field: string;
+  label: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  error?: string;
+  autoComplete?: string;
+  inputMode?: "tel" | "numeric";
+  multiline?: boolean;
+}) {
+  const cls = `w-full rounded-xl border px-4 py-2.5 focus:outline-none focus:border-black ${error ? "border-red-400" : "border-gray-200"}`;
+  const id = `addr-${field}`;
+  return (
+    <div>
+      <label htmlFor={id} className="sr-only">
+        {label}
+      </label>
+      {multiline ? (
+        <textarea id={id} rows={2} placeholder={label} value={value} onChange={onChange} autoComplete={autoComplete} className={cls} />
+      ) : (
+        <input id={id} placeholder={label} value={value} onChange={onChange} autoComplete={autoComplete} inputMode={inputMode} className={cls} />
+      )}
+      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
     </div>
   );
 }

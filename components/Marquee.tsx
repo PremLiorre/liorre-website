@@ -9,10 +9,12 @@ export default function Marquee({
   items,
   height = "h-64 sm:h-80",
   duration = 40,
+  sizes = "480px",
 }: {
   items: Item[];
   height?: string;
   duration?: number;
+  sizes?: string;
 }) {
   return (
     <div className="marquee overflow-hidden">
@@ -26,7 +28,7 @@ export default function Marquee({
                 alt={item.alt}
                 width={0}
                 height={0}
-                sizes="480px"
+                sizes={sizes}
                 className="h-full w-auto"
               />
             </div>

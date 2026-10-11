@@ -90,6 +90,13 @@ export default function FeedbackForm() {
       </div>
 
       <textarea name="message" required rows={4} placeholder="Tell us about your experience…" className={input} />
+      <textarea
+        name="wishlist"
+        rows={2}
+        placeholder="Any new product you wish to see in Liorre? (optional)"
+        aria-label="Any new product you wish to see in Liorre?"
+        className={input}
+      />
 
       <button
         type="submit"

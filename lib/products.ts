@@ -13,6 +13,10 @@ export type Product = {
   // "Product Highlights" bullets (Fit, Style, Look, Versatility, Care).
   highlights: { label: string; value: string }[];
   isNew?: boolean;
+  // Not in stock yet: shown as "Out of Stock — Arriving Soon", can't be added to cart.
+  outOfStock?: boolean;
+  // Sizes currently sold out for this product (shown crossed out; can't be added to cart).
+  soldOutSizes?: string[];
   specs: { label: string; value: string }[];
   // Show the full Liorre wash-care list on the product page.
   showCare?: boolean;
@@ -69,7 +73,7 @@ export const products: Product[] = [
     fit: "Oversized",
     color: "Black",
     price: 849,
-    images: ["/products/lost-in-kyoto-1.jpg", "/products/lost-in-kyoto-2.jpg"],
+    images: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/products/lost-in-kyoto-studio-${n}.jpg`),
     intro:
       "Inspired by the quiet beauty and timeless charm of Kyoto, this design brings together modern streetwear and artistic expression. The Lost in Kyoto T-shirt is made for those who appreciate distinctive graphics, effortless style, and a relaxed silhouette.",
     highlights: [
@@ -216,6 +220,7 @@ export const products: Product[] = [
     ],
     isNew: true,
     specs: regularSpecs,
+    soldOutSizes: ["XL"],
     showCare: true,
     launchOffer: true,
   },
@@ -237,6 +242,7 @@ export const products: Product[] = [
     ],
     isNew: true,
     specs: regularSpecs,
+    soldOutSizes: ["XL"],
     showCare: true,
     launchOffer: true,
   },
@@ -245,6 +251,7 @@ export const products: Product[] = [
     name: "Polo — Navy Blue",
     fit: "Polo",
     color: "Navy Blue",
+    outOfStock: true,
     price: 799,
     images: ["/polo-blue.jpg"],
     intro: "Premium polo t-shirt with embroidered Liorre branding.",
@@ -261,6 +268,7 @@ export const products: Product[] = [
     name: "Polo — Sage Green",
     fit: "Polo",
     color: "Sage Green",
+    outOfStock: true,
     price: 799,
     images: ["/polo-green.jpg"],
     intro: "Modern premium polo crafted for everyday elegance and comfort.",

@@ -27,7 +27,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
 
         <div className="p-5 sm:p-6 flex flex-col flex-1">
-          {(product.isNew || product.launchOffer) && (
+          {(product.isNew || product.launchOffer || product.outOfStock) && (
             <div className="flex flex-wrap gap-2 mb-3">
               {product.isNew && (
                 <span className="bg-amber-600 text-white text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
@@ -37,6 +37,11 @@ export default function ProductCard({ product }: { product: Product }) {
               {product.launchOffer && (
                 <span className="bg-black text-white text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
                   Launch Offer
+                </span>
+              )}
+              {product.outOfStock && (
+                <span className="bg-gray-200 text-gray-700 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                  Out of Stock · Arriving Soon
                 </span>
               )}
             </div>
@@ -63,7 +68,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <div className="mt-auto pt-4 flex items-center justify-between">
             <span className="text-xl font-bold">{formatPrice(product.price)}</span>
             <span className="text-sm font-semibold text-amber-700 group-hover:underline">
-              View & Buy →
+              {product.outOfStock ? "View →" : "View & Buy →"}
             </span>
           </div>
         </div>

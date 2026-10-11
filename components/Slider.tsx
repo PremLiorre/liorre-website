@@ -12,11 +12,15 @@ export default function Slider({
   interval = 4000,
   className = "aspect-[4/5] sm:aspect-[16/10]",
   preloadFirst = false,
+  sizes = "(min-width: 1024px) 50vw, 100vw",
+  imageClassName = "object-contain",
 }: {
   slides: Slide[];
   interval?: number;
   className?: string;
   preloadFirst?: boolean;
+  sizes?: string;
+  imageClassName?: string;
 }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -54,9 +58,9 @@ export default function Slider({
                 src={s.src}
                 alt={s.alt}
                 fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
+                sizes={sizes}
                 preload={preloadFirst && i === 0}
-                className="object-contain"
+                className={imageClassName}
               />
               {(s.title || s.subtitle) && (
                 <div className="absolute inset-x-0 bottom-0 p-6 pb-12 bg-gradient-to-t from-black/70 to-transparent text-white">

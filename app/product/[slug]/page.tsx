@@ -58,6 +58,11 @@ export default async function ProductPage(props: PageProps<"/product/[slug]">) {
                 New Arrival
               </span>
             )}
+            {product.outOfStock && (
+              <span className="bg-gray-200 text-gray-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                Out of Stock
+              </span>
+            )}
             {product.launchOffer && (
               <span className="bg-black text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
                 Launch Offer
@@ -87,7 +92,14 @@ export default async function ProductPage(props: PageProps<"/product/[slug]">) {
           <p className="mt-6 text-3xl font-bold">{formatPrice(product.price)}</p>
 
           <div className="mt-8">
-            <AddToCart slug={product.slug} />
+            {product.outOfStock ? (
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-center">
+                <p className="text-lg font-bold text-amber-800">Out of Stock — Arriving Soon</p>
+                <p className="mt-1 text-sm text-amber-700">Save it to your favourites and check back soon.</p>
+              </div>
+            ) : (
+              <AddToCart slug={product.slug} />
+            )}
             <FavouriteButton
               slug={product.slug}
               withLabel

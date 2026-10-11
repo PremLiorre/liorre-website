@@ -13,7 +13,7 @@ export type Review = {
 export const reviews: Review[] = [];
 
 // What customers have told us offline (no individual ratings) — shown as highlights.
-export const lovedFor = ["Softness", "Comfort"];
+export const lovedFor = ["Softness", "Comfort", "Quality", "Long Life"];
 
 export function ratingFor(productSlug?: string) {
   const list = productSlug

@@ -8,6 +8,8 @@ import FeedbackForm from "@/components/FeedbackForm";
 import { products, newArrivals, getProduct } from "@/lib/products";
 import { lovedFor, reviews, ratingFor } from "@/lib/reviews";
 import { SITE, whatsappLink } from "@/lib/site";
+import { banners } from "@/lib/banners";
+import { FacebookIcon, InstagramIcon, MailIcon, WhatsAppIcon } from "@/components/Icons";
 
 export default function Page() {
   const overall = ratingFor();
@@ -31,13 +33,29 @@ export default function Page() {
   const fitTiles = [
     { title: "Oversized", subtitle: "260 GSM · Launch offer from ₹799", image: "/products/built-different-lava-1.jpg", href: "/shop?filter=oversized" },
     { title: "Regular Fit", subtitle: "220 GSM · Launch offer ₹799", image: "/products/maroon-regular-1.jpg", href: "/shop?filter=regular" },
-    { title: "Polo", subtitle: "Embroidered classics · ₹799", image: "/polo-blue.jpg", href: "/shop?filter=polo" },
+    { title: "Polo", subtitle: "Out of stock · Arriving soon", image: "/polo-blue.jpg", href: "/shop?filter=polo" },
   ];
 
   return (
     <main>
-      {/* Running images on top */}
-      <section aria-label="Liorre collection" className="pt-4 sm:pt-6">
+      {/* Banners — full width, one at a time, auto-rotating every 5 seconds (lib/banners.ts).
+          Phones show the whole 16:9 banner; desktop uses a shorter 12:5 frame that trims
+          only the top/bottom edges, keeping the headline and Shop Now button visible. */}
+      {banners.length > 0 && (
+        <section aria-label="Featured">
+          <Slider
+            slides={banners}
+            interval={5000}
+            className="aspect-video lg:aspect-[12/5] w-full !rounded-none !shadow-none bg-black"
+            imageClassName="object-cover"
+            sizes="100vw"
+            preloadFirst
+          />
+        </section>
+      )}
+
+      {/* Running images */}
+      <section aria-label="Liorre collection" className="pt-6 sm:pt-8">
         <Marquee items={runningImages} height="h-40 sm:h-56" duration={60} />
       </section>
 
@@ -75,7 +93,7 @@ export default function Page() {
             </div>
           </div>
 
-          <Slider slides={heroSlides} className="aspect-[4/5] sm:aspect-[5/4]" preloadFirst />
+          <Slider slides={heroSlides} className="aspect-[4/5] sm:aspect-[5/4]" />
         </div>
       </section>
 
@@ -167,8 +185,8 @@ export default function Page() {
 
               <div className="grid grid-cols-2 gap-4 mt-8">
                 <div className="bg-white p-6 rounded-2xl shadow">
-                  <h3 className="text-3xl font-bold">{products.length}</h3>
-                  <p className="text-gray-500">Unique Designs</p>
+                  <h3 className="text-2xl font-bold">Unique Designs</h3>
+                  <p className="text-gray-500">Every print tells a story</p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl shadow">
                   <h3 className="text-3xl font-bold">24/7</h3>
@@ -257,36 +275,40 @@ export default function Page() {
         <div className="max-w-5xl mx-auto text-center bg-gray-100 rounded-3xl p-8 sm:p-12">
           <h2 className="text-3xl md:text-5xl font-bold">Wear Confidence With Liorre</h2>
           <p className="mt-6 text-gray-600">Premium apparel crafted for modern everyday fashion.</p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href={`mailto:${SITE.email}?subject=Liorre Inquiry&body=Hello Liorre Team,%0D%0A%0D%0AI would like to know more about your products.`}
-              className="inline-block bg-black text-white px-8 py-4 rounded-xl hover:bg-gray-800 transition"
-            >
-              Email Us
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 max-w-4xl mx-auto">
+            {[
+              {
+                href: `mailto:${SITE.email}?subject=Liorre Inquiry&body=Hello Liorre Team,%0D%0A%0D%0AI would like to know more about your products.`,
+                label: "Email Us",
+                icon: <MailIcon />,
+                external: false,
+              },
+              { href: SITE.instagramDmUrl, label: "DM on Instagram", icon: <InstagramIcon />, external: true },
+              { href: whatsappLink("Hi Liorre! I have a question."), label: "WhatsApp Us", icon: <WhatsAppIcon />, external: true },
+              { href: SITE.facebookUrl, label: "Facebook", icon: <FacebookIcon />, external: true },
+            ].map((c) => (
+              <a
+                key={c.label}
+                href={c.href}
+                {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className="inline-flex items-center justify-center gap-2 bg-black text-white px-6 py-4 rounded-xl font-semibold hover:bg-gray-800 transition"
+              >
+                {c.icon}
+                {c.label}
+              </a>
+            ))}
+          </div>
+          <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-gray-600">
+            <a href={`mailto:${SITE.email}`} className="inline-flex items-center gap-2 hover:text-black">
+              <MailIcon size={18} className="text-amber-600" /> {SITE.email}
             </a>
-            <a
-              href={SITE.instagramDmUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block border border-gray-300 bg-white px-8 py-4 rounded-xl hover:border-black transition"
-            >
-              DM on Instagram
+            <a href={SITE.instagramUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-black">
+              <InstagramIcon size={18} className="text-amber-600" /> @{SITE.instagramHandle}
             </a>
-            <a
-              href={whatsappLink("Hi Liorre! I have a question.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block border border-gray-300 bg-white px-8 py-4 rounded-xl hover:border-black transition"
-            >
-              WhatsApp Us
+            <a href={SITE.facebookUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-black">
+              <FacebookIcon size={18} className="text-amber-600" /> Liorre on Facebook
             </a>
           </div>
-          <p className="mt-6 text-gray-500">
-            📧{" "}
-            <a href={`mailto:${SITE.email}`} className="text-amber-600 hover:underline">
-              {SITE.email}
-            </a>
-          </p>
         </div>
       </section>
     </main>
