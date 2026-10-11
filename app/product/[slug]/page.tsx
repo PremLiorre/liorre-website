@@ -6,6 +6,8 @@ import FavouriteButton from "@/components/FavouriteButton";
 import ProductCard from "@/components/ProductCard";
 import ProductGallery from "@/components/ProductGallery";
 import Stars from "@/components/Stars";
+import JsonLd from "@/components/JsonLd";
+import SizeChart from "@/components/SizeChart";
 import {
   CARE_INSTRUCTIONS,
   CARE_SIGNOFF,
@@ -14,7 +16,7 @@ import {
   products,
 } from "@/lib/products";
 import { ratingFor, reviews } from "@/lib/reviews";
-import { formatPrice } from "@/lib/site";
+import { SITE, formatPrice } from "@/lib/site";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -42,6 +44,24 @@ export default async function ProductPage(props: PageProps<"/product/[slug]">) {
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: product.name,
+          description: product.intro,
+          image: product.images.map((i) => `${SITE.url}${i}`),
+          brand: { "@type": "Brand", name: "LIORRE" },
+          color: product.color,
+          offers: {
+            "@type": "Offer",
+            url: `${SITE.url}/product/${product.slug}`,
+            priceCurrency: "INR",
+            price: product.price,
+            availability: product.outOfStock ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+          },
+        }}
+      />
       <nav className="text-sm text-gray-500 mb-6">
         <Link href="/" className="hover:text-black">Home</Link> /{" "}
         <Link href="/shop" className="hover:text-black">Shop</Link> /{" "}
@@ -162,6 +182,8 @@ export default async function ProductPage(props: PageProps<"/product/[slug]">) {
               <p className="mt-4 font-semibold">{CARE_SIGNOFF}</p>
             </details>
           )}
+
+          {product.fit !== "Polo" && <SizeChart fit={product.fit} />}
         </div>
       </div>
 

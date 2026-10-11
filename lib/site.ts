@@ -2,6 +2,7 @@
 
 export const SITE = {
   name: "LIORRE",
+  url: "https://liorre.in",
   parent: "Oraeon Group",
   email: "oraeongroup@gmail.com",
   instagramHandle: "liorre2026",

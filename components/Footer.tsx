@@ -9,7 +9,7 @@ export default function Footer() {
     <footer className="border-t border-gray-200 bg-white">
       <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row gap-6 justify-between items-center text-center md:text-left">
         <div className="flex items-center gap-3">
-          <Image src="/logo-gold.jpg" alt="Liorre Logo" width={48} height={48} className="h-12 w-12 rounded-lg" />
+          <Image src="/logo-gold.jpg" alt="LIORRE" width={48} height={48} className="h-12 w-12 rounded-lg" />
           <p className="text-gray-500">© 2026 Liorre — Powered by {SITE.parent}</p>
         </div>
 
