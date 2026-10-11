@@ -11,7 +11,7 @@ export default function Lookbook() {
 
         <img
           src="/logo.jpg"
-          alt="Liorre Logo"
+          alt="LIORRE"
           className="h-90 md:h-32 w-auto object-contain"
         />
 

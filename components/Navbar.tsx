@@ -41,7 +41,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 h-[72px] sm:h-20 md:h-[88px] flex items-center justify-between gap-2">
         <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0" onClick={onLinkClick("/")}>
-          <Image src="/logo-gold.jpg" alt="Liorre Logo" width={64} height={64} preload className="h-10 w-10 min-[360px]:h-11 min-[360px]:w-11 sm:h-14 sm:w-14 md:h-16 md:w-16 rounded-xl" />
+          <Image src="/logo-gold.jpg" alt="" aria-hidden width={64} height={64} preload className="h-10 w-10 min-[360px]:h-11 min-[360px]:w-11 sm:h-14 sm:w-14 md:h-16 md:w-16 rounded-xl" />
           <span className="text-lg min-[360px]:text-xl sm:text-2xl md:text-[1.7rem] font-bold tracking-wide">LIORRE</span>
         </Link>
 

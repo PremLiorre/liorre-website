@@ -14,7 +14,14 @@ export default function AddToCart({ slug }: { slug: string }) {
 
   return (
     <div>
-      <p className="font-semibold">Select Size</p>
+      <div className="flex items-baseline justify-between">
+        <p className="font-semibold">Select Size</p>
+        {getProduct(slug)?.fit !== "Polo" && (
+          <a href="#size-chart" className="text-sm font-semibold text-amber-700 hover:underline">
+            Size Chart
+          </a>
+        )}
+      </div>
       <div className="mt-3 flex flex-wrap gap-2">
         {SIZES.map((s) => {
           const isSoldOut = soldOut.includes(s);

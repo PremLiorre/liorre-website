@@ -34,6 +34,7 @@ function validate(a: Address) {
 export default function CartDrawer() {
   const { items, total, isOpen, close, setQty, remove } = useCart();
   const [copied, setCopied] = useState(false);
+  const [igStep, setIgStep] = useState(false);
   const [address, setAddress] = useState<Address>(EMPTY_ADDRESS);
   const [showErrors, setShowErrors] = useState(false);
 
@@ -93,14 +94,33 @@ export default function CartDrawer() {
     return false;
   };
 
-  // Instagram can't prefill a DM, so copy the order first for the customer to paste.
-  const orderOnInstagram = async () => {
+  // Instagram can't prefill a DM, so copy the order first, then show a step with
+  // real links the customer taps. A direct tap (not window.open after an await) lets
+  // phones open the Instagram app chat instead of the Instagram website home page.
+  const copyOrder = () => {
+    const fallback = () => {
+      const t = document.createElement("textarea");
+      t.value = orderMessage;
+      t.setAttribute("readonly", "");
+      t.style.position = "fixed";
+      t.style.opacity = "0";
+      document.body.appendChild(t);
+      t.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(t);
+      return ok;
+    };
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(orderMessage).then(() => setCopied(true), () => setCopied(fallback()));
+    } else {
+      setCopied(fallback());
+    }
+  };
+
+  const orderOnInstagram = () => {
     if (!requireAddress()) return;
-    try {
-      await navigator.clipboard.writeText(orderMessage);
-      setCopied(true);
-    } catch {}
-    window.open(SITE.instagramDmUrl, "_blank", "noopener,noreferrer");
+    copyOrder();
+    setIgStep(true);
   };
 
   return (
@@ -231,16 +251,58 @@ export default function CartDrawer() {
                   Order on WhatsApp
                 </a>
               )}
-              <button
-                onClick={orderOnInstagram}
-                className="w-full bg-black text-white font-semibold py-3 rounded-xl hover:bg-gray-800 transition"
-              >
-                Order on Instagram
-              </button>
-              {copied && (
-                <p className="text-xs text-green-700 text-center">
-                  Order and address copied — paste them in the Instagram chat.
-                </p>
+              {!igStep ? (
+                <button
+                  onClick={orderOnInstagram}
+                  className="w-full bg-black text-white font-semibold py-3 rounded-xl hover:bg-gray-800 transition"
+                >
+                  Order on Instagram
+                </button>
+              ) : (
+                <div className="rounded-2xl border border-gray-200 p-4 space-y-3">
+                  <p className="font-semibold">
+                    {copied ? "✅ Order & address copied" : "Copy your order, then message us"}
+                  </p>
+                  <ol className="text-sm text-gray-600 list-decimal pl-5 space-y-1">
+                    <li>Tap <b>Open Instagram chat</b> below.</li>
+                    <li>If our profile opens instead, tap <b>Message</b>.</li>
+                    <li>Paste the copied order and send it to <b>@{SITE.instagramHandle}</b>.</li>
+                  </ol>
+                  <a
+                    href={SITE.instagramDmUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-center bg-black text-white font-semibold py-3 rounded-xl hover:bg-gray-800 transition"
+                  >
+                    Open Instagram chat
+                  </a>
+                  <a
+                    href={SITE.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-center border border-gray-300 font-semibold py-2.5 rounded-xl hover:border-black transition text-sm"
+                  >
+                    Open @{SITE.instagramHandle} profile
+                  </a>
+                  <div className="flex justify-between text-sm">
+                    <button onClick={copyOrder} className="text-amber-700 font-semibold hover:underline">
+                      Copy order again
+                    </button>
+                    <button onClick={() => setIgStep(false)} className="text-gray-500 hover:text-black">
+                      Back
+                    </button>
+                  </div>
+                  {!copied && (
+                    <textarea
+                      readOnly
+                      value={orderMessage}
+                      rows={6}
+                      onFocus={(e) => e.currentTarget.select()}
+                      className="w-full text-xs rounded-xl border border-gray-200 p-3"
+                      aria-label="Your order — copy this text"
+                    />
+                  )}
+                </div>
               )}
             </div>
           </div>
