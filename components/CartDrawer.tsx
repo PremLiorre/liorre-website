@@ -276,14 +276,6 @@ export default function CartDrawer() {
                   >
                     Open Instagram chat
                   </a>
-                  <a
-                    href={SITE.instagramUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-center border border-gray-300 font-semibold py-2.5 rounded-xl hover:border-black transition text-sm"
-                  >
-                    Open @{SITE.instagramHandle} profile
-                  </a>
                   <div className="flex justify-between text-sm">
                     <button onClick={copyOrder} className="text-amber-700 font-semibold hover:underline">
                       Copy order again
