@@ -5,10 +5,10 @@ export const SITE = {
   url: "https://liorre.in",
   parent: "Oraeon Group",
   email: "oraeongroup@gmail.com",
-  instagramHandle: "liorre2026",
-  instagramUrl: "https://www.instagram.com/liorre2026",
+  instagramHandle: "liorre.in",
+  instagramUrl: "https://www.instagram.com/liorre.in/",
   // Opens a DM thread with the brand account.
-  instagramDmUrl: "https://ig.me/m/liorre2026",
+  instagramDmUrl: "https://ig.me/m/liorre.in",
   facebookUrl: "https://www.facebook.com/share/18Cxb1V344/?mibextid=wwXIfr",
   // Order WhatsApp number: country code + number, digits only.
   // If emptied, checkout falls back to Instagram only.

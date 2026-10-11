@@ -52,7 +52,7 @@ function createLiorreFeedbackForm() {
     )
     .setConfirmationMessage(
       'Thank you for your feedback! 🙏 It means a lot to the Liorre team.\n' +
-        'Follow us on Instagram @liorre2026 for new drops.'
+        'Follow us on Instagram @liorre.in for new drops.'
     )
     .setProgressBar(true)
     .setShowLinkToRespondAgain(true)
