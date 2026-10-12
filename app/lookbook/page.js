@@ -1,3 +1,5 @@
+import Wordmark from "@/components/Wordmark";
+
 export default function Lookbook() {
   return (
     <main className="bg-[#f5f1ed] text-black min-h-screen">
@@ -15,8 +17,8 @@ export default function Lookbook() {
           className="h-90 md:h-32 w-auto object-contain"
         />
 
-        <h1 className="text-6xl md:text-8xl font-bold tracking-wide mt-6">
-          LIORRE
+        <h1 className="mt-6">
+          <Wordmark className="w-4/5 max-w-[760px] h-auto mx-auto text-black" tmTextColor="#f5f1ed" />
         </h1>
 
         <p className="mt-6 text-2xl text-gray-600">
@@ -246,8 +248,8 @@ export default function Lookbook() {
               This is more than clothing.
             </p>
 
-            <h1 className="text-7xl font-bold mt-8 tracking-wider">
-              LIORRE
+            <h1 className="mt-8">
+              <Wordmark className="w-4/5 max-w-[640px] h-auto mx-auto text-white" tmTextColor="#000000" />
             </h1>
 
           </div>

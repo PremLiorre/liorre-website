@@ -7,7 +7,7 @@ import ProductCard from "@/components/ProductCard";
 import ProductGallery from "@/components/ProductGallery";
 import Stars from "@/components/Stars";
 import JsonLd from "@/components/JsonLd";
-import SizeChart from "@/components/SizeChart";
+import SizeChart, { CHARTS } from "@/components/SizeChart";
 import {
   CARE_INSTRUCTIONS,
   CARE_SIGNOFF,
@@ -69,7 +69,7 @@ export default async function ProductPage(props: PageProps<"/product/[slug]">) {
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
-        <ProductGallery images={product.images} alt={product.name} />
+        <ProductGallery images={[...product.images, ...(CHARTS[product.fit] ? [CHARTS[product.fit]!.src] : [])]} alt={product.name} />
 
         <div>
           <div className="flex flex-wrap gap-2 mb-3">

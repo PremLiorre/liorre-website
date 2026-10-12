@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { Fit } from "@/lib/products";
 
-const CHARTS: Partial<Record<Fit, { src: string; title: string }>> = {
+export const CHARTS: Partial<Record<Fit, { src: string; title: string }>> = {
   Oversized: { src: "/size-charts/oversized-size-chart.jpg", title: "Oversized T-Shirt Size Chart" },
   "Regular Fit": { src: "/size-charts/regular-fit-size-chart.jpg", title: "Regular Fit T-Shirt Size Chart" },
 };

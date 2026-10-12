@@ -8,6 +8,7 @@ import { useCart } from "./CartContext";
 import { useFavourites } from "./FavouritesContext";
 import SearchBox from "./SearchBox";
 import FilterBar from "./FilterBar";
+import Wordmark from "./Wordmark";
 
 const links = [
   { href: "/", label: "Home" },
@@ -42,7 +43,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 h-[72px] sm:h-20 md:h-[88px] flex items-center justify-between gap-2">
         <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0" onClick={onLinkClick("/")}>
           <Image src="/logo-gold.jpg" alt="" aria-hidden width={64} height={64} preload className="h-10 w-10 min-[360px]:h-11 min-[360px]:w-11 sm:h-14 sm:w-14 md:h-16 md:w-16 rounded-xl" />
-          <span className="text-lg min-[360px]:text-xl sm:text-2xl md:text-[1.7rem] font-bold tracking-wide">LIORRE</span>
+          <Wordmark className="h-[15px] min-[360px]:h-[17px] sm:h-5 md:h-6 w-auto text-[#1a1712]" />
         </Link>
 
         <div className="hidden lg:flex items-center gap-6 xl:gap-7">
@@ -86,10 +87,11 @@ export default function Navbar() {
             </svg>
           </button>
 
+          {/* On the smallest phones Favourites lives in the ☰ menu to keep the bar on one line */}
           <Link
             href="/favourites"
             aria-label={`Favourites, ${slugs.length} saved`}
-            className="relative p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition"
+            className="relative hidden min-[400px]:inline-flex p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">
               <path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2Z" />

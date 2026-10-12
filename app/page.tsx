@@ -3,6 +3,7 @@ import Link from "next/link";
 import Marquee from "@/components/Marquee";
 import Slider from "@/components/Slider";
 import ProductCard from "@/components/ProductCard";
+import Wordmark from "@/components/Wordmark";
 import Stars from "@/components/Stars";
 import FeedbackForm from "@/components/FeedbackForm";
 import { products, newArrivals, getProduct } from "@/lib/products";
@@ -64,7 +65,10 @@ export default function Page() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           <div>
             <p className="uppercase tracking-[0.3em] text-amber-600 text-sm mb-4">{SITE.parent}</p>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold">LIORRE</h1>
+            <h1>
+              <span className="sr-only">LIORRE</span>
+              <Wordmark className="w-full max-w-[300px] sm:max-w-[420px] md:max-w-[540px] h-auto text-[#1a1712]" title="LIORRE" />
+            </h1>
             <p className="mt-6 text-lg text-gray-600 max-w-xl">
               Premium oversized, acid wash and regular fit t-shirts crafted for comfort,
               confidence and modern fashion.
