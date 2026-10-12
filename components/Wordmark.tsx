@@ -1,5 +1,5 @@
-// LIORRE™ wordmark (geometric letterforms), drawn as SVG so it stays sharp at any size.
-// Colour follows the surrounding text colour (currentColor).
+// LIORRE™ wordmark, traced from the brand artwork (geometry measured from the
+// reference image) so it stays sharp at any size. Colour follows currentColor.
 export default function Wordmark({
   className = "",
   tmTextColor = "#ffffff",
@@ -11,43 +11,39 @@ export default function Wordmark({
   title?: string;
 }) {
   return (
-    <svg viewBox="66 -30 912 136" fill="currentColor" role="img" aria-label={title} className={className}>
+    <svg viewBox="30 14 445 70" fill="currentColor" role="img" aria-label={title} className={className}>
       <title>{title}</title>
       {/* L */}
-      <rect x="72" y="0" width="15" height="100" rx="4.5" />
-      <rect x="72" y="85" width="91" height="15" rx="4.5" />
+      <path d="M37 31.5h3.5a2.5 2.5 0 0 1 2.5 2.5V73H77a2.5 2.5 0 0 1 2.5 2.5V77A2.5 2.5 0 0 1 77 79.5H39a4.5 4.5 0 0 1-4.5-4.5V34a2.5 2.5 0 0 1 2.5-2.5Z" />
       {/* I */}
-      <rect x="216" y="0" width="15" height="100" rx="4.5" />
+      <rect x="104.6" y="31.5" width="8.3" height="48" rx="2.3" />
       {/* O */}
       <path
         fillRule="evenodd"
-        d="M317 0h95a10 10 0 0 1 10 10v80a10 10 0 0 1-10 10h-95a10 10 0 0 1-10-10V10a10 10 0 0 1 10-10Zm6 15a4 4 0 0 0-4 4v62a4 4 0 0 0 4 4h83a4 4 0 0 0 4-4V19a4 4 0 0 0-4-4Z"
+        d="M152.5 31h44.5a5.5 5.5 0 0 1 5.5 5.5v37.5a5.5 5.5 0 0 1-5.5 5.5h-44.5a5.5 5.5 0 0 1-5.5-5.5V36.5a5.5 5.5 0 0 1 5.5-5.5Zm3 7v35h38.6V38Z"
       />
-      {/* R R */}
-      {[491, 659].map((x) => (
-        <g key={x}>
-          <rect x={x} y="0" width="15" height="100" rx="4.5" />
-          <rect x={x} y="0" width="109" height="15" rx="4.5" />
-          <rect x={x + 94} y="0" width="15" height="56" rx="4.5" />
-          <rect x={x} y="41" width="109" height="15" rx="4.5" />
-          <path d={`M${x + 37} 56h20l52 44h-21Z`} />
+      {/* R R — top bar + bowl, lower stem, detached leg */}
+      {[0, 81].map((dx) => (
+        <g key={dx} transform={`translate(${dx} 0)`}>
+          <path d="M240 31h40a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6h-43V56.5a2.5 2.5 0 0 1 2.5-2.5H277.4V37.5H240a2.5 2.5 0 0 1-2.5-2.5V33.5a2.5 2.5 0 0 1 2.5-2.5Z" />
+          <rect x="237" y="54" width="8.5" height="25.5" rx="2.3" />
+          <path d="M264.5 63.5h8.2a1.5 1.5 0 0 1 1.1.5l15.8 14a.9.9 0 0 1-.6 1.5h-9.2a1.5 1.5 0 0 1-1.1-.5L263.9 65a.9.9 0 0 1 .6-1.5Z" />
         </g>
       ))}
-      {/* E */}
-      <rect x="824" y="0" width="15" height="100" rx="4.5" />
-      <rect x="824" y="0" width="99" height="15" rx="4.5" />
-      <rect x="824" y="42.5" width="66" height="15" rx="4.5" />
-      <rect x="824" y="85" width="99" height="15" rx="4.5" />
+      {/* E — detached top bar */}
+      <rect x="398" y="31" width="48.5" height="6.6" rx="2.3" />
+      <path d="M400.6 44h3.4a2.5 2.5 0 0 1 2.5 2.5V51H428a2.5 2.5 0 0 1 2.5 2.5V55a2.5 2.5 0 0 1-2.5 2.5h-21.5V73H444a2.5 2.5 0 0 1 2.5 2.5V77a2.5 2.5 0 0 1-2.5 2.5h-41.5a4.5 4.5 0 0 1-4.5-4.5V46.6a2.6 2.6 0 0 1 2.6-2.6Z" />
       {/* ™ */}
-      <circle cx="958" cy="-13" r="11.5" />
+      <circle cx="462.6" cy="23.6" r="6.9" />
       <text
-        x="958"
-        y="-10"
-        fontSize="8.5"
+        x="462.6"
+        y="25.4"
+        fontSize="5"
         fontFamily="Arial, Helvetica, sans-serif"
         fontWeight="700"
         fill={tmTextColor}
         textAnchor="middle"
+        letterSpacing="-0.2"
       >
         TM
       </text>
