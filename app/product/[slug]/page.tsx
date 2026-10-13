@@ -69,7 +69,7 @@ export default async function ProductPage(props: PageProps<"/product/[slug]">) {
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
-        <ProductGallery images={[...product.images, ...(CHARTS[product.fit] ? [CHARTS[product.fit]!.src] : [])]} alt={product.name} />
+        <ProductGallery images={[...product.images, ...(CHARTS[product.fit] ? [CHARTS[product.fit]!.src] : [])]} alt={product.name} discountPercent={product.discountPercent} />
 
         <div>
           <div className="flex flex-wrap gap-2 mb-3">
@@ -109,7 +109,15 @@ export default async function ProductPage(props: PageProps<"/product/[slug]">) {
             )}
           </div>
 
-          <p className="mt-6 text-3xl font-bold">{formatPrice(product.price)}</p>
+          <div className="mt-6 flex flex-wrap items-baseline gap-3">
+            <p className="text-3xl font-bold">{formatPrice(product.price)}</p>
+            {product.mrp && (
+              <>
+                <s className="text-lg text-gray-400">MRP {formatPrice(product.mrp)}</s>
+                <span className="text-sm font-bold text-red-600">{product.discountPercent}% OFF</span>
+              </>
+            )}
+          </div>
 
           <div className="mt-8">
             {product.outOfStock ? (

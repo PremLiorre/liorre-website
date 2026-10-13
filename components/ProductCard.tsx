@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import DiscountBadge from "./DiscountBadge";
 import FavouriteButton from "./FavouriteButton";
 import Stars from "./Stars";
 import type { Product } from "@/lib/products";
@@ -24,6 +25,9 @@ export default function ProductCard({ product }: { product: Product }) {
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-contain group-hover:scale-[1.03] transition duration-500"
           />
+          {product.discountPercent && (
+            <DiscountBadge percent={product.discountPercent} className="absolute top-2 left-2 w-20 h-20 sm:w-24 sm:h-24" />
+          )}
         </div>
 
         <div className="p-5 sm:p-6 flex flex-col flex-1">
@@ -66,7 +70,10 @@ export default function ProductCard({ product }: { product: Product }) {
           </div>
 
           <div className="mt-auto pt-4 flex items-center justify-between">
-            <span className="text-xl font-bold">{formatPrice(product.price)}</span>
+            <span className="flex items-baseline gap-2">
+              <span className="text-xl font-bold">{formatPrice(product.price)}</span>
+              {product.mrp && <s className="text-sm text-gray-400">{formatPrice(product.mrp)}</s>}
+            </span>
             <span className="text-sm font-semibold text-amber-700 group-hover:underline">
               {product.outOfStock ? "View →" : "View & Buy →"}
             </span>
