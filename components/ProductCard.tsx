@@ -26,7 +26,7 @@ export default function ProductCard({ product }: { product: Product }) {
             className="object-contain group-hover:scale-[1.03] transition duration-500"
           />
           {product.discountPercent && (
-            <DiscountBadge percent={product.discountPercent} className="absolute top-2 left-2 w-20 h-20 sm:w-24 sm:h-24" />
+            <DiscountBadge percent={product.discountPercent} className="absolute top-1 left-1 w-11 h-11 sm:w-12 sm:h-12" />
           )}
         </div>
 
