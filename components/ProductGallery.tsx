@@ -27,7 +27,7 @@ export default function ProductGallery({
           className="object-contain"
         />
         {discountPercent && (
-          <DiscountBadge percent={discountPercent} className="absolute top-3 left-3 w-24 h-24 sm:w-28 sm:h-28" />
+          <DiscountBadge percent={discountPercent} className="absolute top-2 left-2 w-14 h-14 sm:w-16 sm:h-16" />
         )}
       </div>
 
