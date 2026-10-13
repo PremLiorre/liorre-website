@@ -6,6 +6,9 @@ export type Product = {
   fit: Fit;
   color: string;
   price: number;
+  // Original price shown struck through, and the % OFF shown on the red badge.
+  mrp?: number;
+  discountPercent?: number;
   launchOffer?: boolean;
   images: string[];
   // Opening paragraph of the description.
@@ -73,6 +76,8 @@ export const products: Product[] = [
     fit: "Oversized",
     color: "Black",
     price: 849,
+    mrp: 1399,
+    discountPercent: 40,
     images: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/products/lost-in-kyoto-studio-${n}.jpg`),
     intro:
       "Inspired by the quiet beauty and timeless charm of Kyoto, this design brings together modern streetwear and artistic expression. The Lost in Kyoto T-shirt is made for those who appreciate distinctive graphics, effortless style, and a relaxed silhouette.",
@@ -94,6 +99,8 @@ export const products: Product[] = [
     fit: "Oversized",
     color: "White",
     price: 849,
+    mrp: 1399,
+    discountPercent: 40,
     images: ["/products/focus-panda-1.jpg", "/products/focus-panda-2.jpg"],
     intro:
       "Inspired by the calm strength of the panda and the balance of yin and yang, this design is a reminder that every great journey begins within. The Focus T-shirt pairs a clean white canvas with a bold back graphic, made for those who move with intention and wear their mindset with pride.",
@@ -115,6 +122,8 @@ export const products: Product[] = [
     fit: "Oversized",
     color: "Lava Black Acid Wash",
     price: 849,
+    mrp: 1399,
+    discountPercent: 40,
     images: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/products/built-different-lava-${n}.jpg`),
     intro:
       "Made for those who refuse to blend in, Built Different pairs a rugged lava-black acid wash with a raw, distressed back graphic. Every piece carries its own wash pattern, just like the person wearing it. The Built Different T-shirt is for those who set their own standards and back them with quiet confidence.",
@@ -136,6 +145,8 @@ export const products: Product[] = [
     fit: "Oversized",
     color: "Beige",
     price: 799,
+    mrp: 1299,
+    discountPercent: 38,
     images: [
       "/products/shiki-1.jpg",
       "/products/shiki-front.jpg",
@@ -162,6 +173,8 @@ export const products: Product[] = [
     fit: "Oversized",
     color: "Grape Wine Acid Wash",
     price: 799,
+    mrp: 1299,
+    discountPercent: 38,
     images: [
       "/products/grape-wine-1.jpg",
       "/products/grape-wine-2.jpg",
@@ -187,6 +200,8 @@ export const products: Product[] = [
     fit: "Oversized",
     color: "Bottle Green Acid Wash",
     price: 799,
+    mrp: 1299,
+    discountPercent: 38,
     images: ["/products/one-step-model.jpg", "/products/one-step-2.jpg"],
     intro:
       "Progress is built one step at a time. Bold yellow typography on a bottle-green acid wash turns this T-shirt into a statement of patience, persistence, and quiet confidence. Made for those who keep moving forward, no matter the pace.",
@@ -207,7 +222,9 @@ export const products: Product[] = [
     name: "Maroon Line Art",
     fit: "Regular Fit",
     color: "Maroon",
-    price: 799,
+    price: 649,
+    mrp: 999,
+    discountPercent: 35,
     images: ["/products/maroon-regular-1.jpg"],
     intro:
       "Clean lines and quiet emotion come together in this regular fit T-shirt. A fine line-art portrait on the front and vertical Japanese script on the back create a look that is subtle up close and striking from afar. Made for those who prefer their style understated but meaningful.",
@@ -229,7 +246,9 @@ export const products: Product[] = [
     name: "Nomad Culture",
     fit: "Regular Fit",
     color: "Black",
-    price: 799,
+    price: 699,
+    mrp: 999,
+    discountPercent: 30,
     images: ["/products/nomad-culture-1.jpg", "/products/nomad-culture-2.jpg"],
     intro:
       "Rooted in the spirit of wandering and ancient storytelling, Nomad Culture features a tribal-inspired graphic of figures and symbols that celebrate journeys, community, and heritage. The Nomad Culture T-shirt is made for explorers at heart who carry their roots wherever they go.",

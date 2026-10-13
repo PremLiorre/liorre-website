@@ -2,8 +2,17 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import DiscountBadge from "./DiscountBadge";
 
-export default function ProductGallery({ images, alt }: { images: string[]; alt: string }) {
+export default function ProductGallery({
+  images,
+  alt,
+  discountPercent,
+}: {
+  images: string[];
+  alt: string;
+  discountPercent?: number;
+}) {
   const [active, setActive] = useState(0);
 
   return (
@@ -17,6 +26,9 @@ export default function ProductGallery({ images, alt }: { images: string[]; alt:
           sizes="(min-width: 1024px) 50vw, 100vw"
           className="object-contain"
         />
+        {discountPercent && (
+          <DiscountBadge percent={discountPercent} className="absolute top-3 left-3 w-24 h-24 sm:w-28 sm:h-28" />
+        )}
       </div>
 
       {images.length > 1 && (
