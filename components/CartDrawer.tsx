@@ -32,7 +32,7 @@ function validate(a: Address) {
 }
 
 export default function CartDrawer() {
-  const { items, total, isOpen, close, setQty, remove } = useCart();
+  const { checkoutItems: items, checkoutTotal: total, isBuyNow, isOpen, close, setQty, remove } = useCart();
   const [copied, setCopied] = useState(false);
   const [igStep, setIgStep] = useState(false);
   const [address, setAddress] = useState<Address>(EMPTY_ADDRESS);
@@ -139,7 +139,7 @@ export default function CartDrawer() {
         className={`absolute right-0 top-0 h-full w-full sm:max-w-md bg-white shadow-2xl flex flex-col transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-          <h2 className="text-xl font-bold">Your Cart</h2>
+          <h2 className="text-xl font-bold">{isBuyNow ? "Buy Now" : "Your Cart"}</h2>
           <button onClick={close} aria-label="Close cart" className="text-2xl leading-none p-2 -m-2">
             ×
           </button>

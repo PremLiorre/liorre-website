@@ -5,7 +5,7 @@ import { useCart } from "./CartContext";
 import { SIZES, getProduct } from "@/lib/products";
 
 export default function AddToCart({ slug }: { slug: string }) {
-  const { add } = useCart();
+  const { add, buyNow } = useCart();
   const [size, setSize] = useState<string | null>(null);
   const [qty, setQty] = useState(1);
   const [error, setError] = useState(false);
@@ -78,6 +78,12 @@ export default function AddToCart({ slug }: { slug: string }) {
           Add to Cart
         </button>
       </div>
+      <button
+        onClick={() => (size ? buyNow(slug, size, qty) : setError(true))}
+        className="mt-3 w-full h-14 bg-amber-700 text-white font-semibold rounded-xl hover:bg-amber-800 transition"
+      >
+        Buy Now
+      </button>
     </div>
   );
 }
