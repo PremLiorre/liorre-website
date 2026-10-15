@@ -9,10 +9,15 @@ type CartContextValue = {
   items: CartItem[];
   count: number;
   total: number;
+  // What the drawer checks out: the Buy Now item alone, or else the whole cart.
+  checkoutItems: CartItem[];
+  checkoutTotal: number;
+  isBuyNow: boolean;
   isOpen: boolean;
   open: () => void;
   close: () => void;
   add: (slug: string, size: string, qty?: number) => void;
+  buyNow: (slug: string, size: string, qty: number) => void;
   setQty: (slug: string, size: string, qty: number) => void;
   remove: (slug: string, size: string) => void;
   clear: () => void;
@@ -25,6 +30,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  // Buy Now checks out a single item without touching the saved cart.
+  const [buyNowItem, setBuyNowItem] = useState<CartItem | null>(null);
 
   // Restore the cart after hydration so server and client render the same markup.
   useEffect(() => {
@@ -48,14 +55,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items, loaded]);
 
   const open = useCallback(() => setIsOpen(true), []);
-  const close = useCallback(() => setIsOpen(false), []);
+  const close = useCallback(() => {
+    setIsOpen(false);
+    setBuyNowItem(null);
+  }, []);
 
-  const setQty = (slug: string, size: string, qty: number) =>
+  const setQty = (slug: string, size: string, qty: number) => {
+    if (buyNowItem) {
+      setBuyNowItem(qty > 0 ? { ...buyNowItem, qty } : null);
+      return;
+    }
     setItems((prev) =>
       prev
         .map((i) => (i.slug === slug && i.size === size ? { ...i, qty } : i))
         .filter((i) => i.qty > 0),
     );
+  };
 
   const add = (slug: string, size: string, qty = 1) => {
     setItems((prev) => {
@@ -65,14 +80,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { slug, size, qty }];
     });
+    setBuyNowItem(null);
     setIsOpen(true);
   };
 
+  const buyNow = (slug: string, size: string, qty: number) => {
+    setBuyNowItem({ slug, size, qty });
+    setIsOpen(true);
+  };
+
+  const sum = (list: CartItem[]) =>
+    list.reduce((total, i) => total + (getProduct(i.slug)?.price ?? 0) * i.qty, 0);
+  const checkoutItems = buyNowItem ? [buyNowItem] : items;
+
   const count = items.reduce((n, i) => n + i.qty, 0);
-  const total = items.reduce(
-    (sum, i) => sum + (getProduct(i.slug)?.price ?? 0) * i.qty,
-    0,
-  );
+  const total = sum(items);
 
   return (
     <CartContext.Provider
@@ -80,10 +102,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         items,
         count,
         total,
+        checkoutItems,
+        checkoutTotal: sum(checkoutItems),
+        isBuyNow: buyNowItem !== null,
         isOpen,
         open,
         close,
         add,
+        buyNow,
         setQty,
         remove: (slug, size) => setQty(slug, size, 0),
         clear: () => setItems([]),
