@@ -23,6 +23,7 @@ const COLOURS: Record<string, string[]> = {
   beige: ["beige"],
   cream: ["beige"],
   offwhite: ["beige", "white"],
+  yellow: ["beige"],
   maroon: ["maroon"],
   red: ["maroon"],
   burgundy: ["maroon"],
