@@ -124,7 +124,12 @@ export const products: Product[] = [
     price: 849,
     mrp: 1399,
     discountPercent: 40,
-    images: [1, 2, 3].map((n) => `/products/built-different-v2-${n}.jpg`),
+    images: [
+      "/products/built-different-v2-1.jpg",
+      "/products/built-different-v2-2.jpg",
+      "/products/built-different-back-model.jpg",
+      ...[4, 5, 6, 7, 8].map((n) => `/products/built-different-v2-${n}.jpg`),
+    ],
     intro:
       "Made for those who refuse to blend in, Built Different pairs a rugged lava-black acid wash with a raw, distressed back graphic. Every piece carries its own wash pattern, just like the person wearing it. The Built Different T-shirt is for those who set their own standards and back them with quiet confidence.",
     highlights: [
