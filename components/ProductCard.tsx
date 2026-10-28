@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DiscountBadge from "./DiscountBadge";
 import FavouriteButton from "./FavouriteButton";
+import ShareButton from "./ShareButton";
 import Stars from "./Stars";
 import type { Product } from "@/lib/products";
 import { ratingFor } from "@/lib/reviews";
@@ -84,6 +85,9 @@ export default function ProductCard({ product }: { product: Product }) {
         slug={product.slug}
         className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white/90 shadow hover:bg-white"
       />
+      <div className="absolute top-15 right-3">
+        <ShareButton slug={product.slug} name={product.name} className="w-10 h-10 rounded-full bg-white/90 shadow hover:bg-white" />
+      </div>
     </div>
   );
 }

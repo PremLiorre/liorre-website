@@ -32,7 +32,7 @@ export default function Page() {
     }));
 
   const fitTiles = [
-    { title: "Oversized", subtitle: "260 GSM · Launch offer from ₹799", image: "/products/built-different-lava-1.jpg", href: "/shop?filter=oversized" },
+    { title: "Oversized", subtitle: "260 GSM · Launch offer from ₹799", image: "/products/built-different-v2-1.jpg", href: "/shop?filter=oversized" },
     { title: "Regular Fit", subtitle: "220 GSM · Launch offer from ₹649", image: "/products/maroon-regular-1.jpg", href: "/shop?filter=regular" },
     { title: "Polo", subtitle: "Out of stock · Arriving soon", image: "/polo-blue.jpg", href: "/shop?filter=polo" },
   ];

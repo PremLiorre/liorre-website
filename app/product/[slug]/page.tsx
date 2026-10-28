@@ -5,6 +5,7 @@ import AddToCart from "@/components/AddToCart";
 import FavouriteButton from "@/components/FavouriteButton";
 import ProductCard from "@/components/ProductCard";
 import ProductGallery from "@/components/ProductGallery";
+import ShareButton from "@/components/ShareButton";
 import Stars from "@/components/Stars";
 import JsonLd from "@/components/JsonLd";
 import SizeChart, { CHARTS } from "@/components/SizeChart";
@@ -130,6 +131,12 @@ export default async function ProductPage(props: PageProps<"/product/[slug]">) {
             )}
             <FavouriteButton
               slug={product.slug}
+              withLabel
+              className="mt-3 w-full h-12 rounded-xl border border-gray-300 hover:border-black"
+            />
+            <ShareButton
+              slug={product.slug}
+              name={product.name}
               withLabel
               className="mt-3 w-full h-12 rounded-xl border border-gray-300 hover:border-black"
             />
